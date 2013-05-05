@@ -2,13 +2,11 @@ SRC = src/
 INCL = include/
 inc = -I./include
 
-PROJECT =  Main.o
+PROJECT = Metro.o Correspondance.o Parcours.o Ligne.o Fichier.o Main.o
 
 TARGET = metro
 
 CFLAGS = -Wall -ansi -g -pedantic 
-
-LDLIBS = -lMLV
 
 CC = colorgcc
 
