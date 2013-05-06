@@ -1,3 +1,4 @@
+#include <string.h>
 #include "Metro.h"
 
 Metro *creer_Metro(int totalStations, int nbLignes) {
@@ -36,7 +37,7 @@ Metro *creer_Metro(int totalStations, int nbLignes) {
 		free(m);
 		m = NULL;
 		return NULL;
-	}
+	}*/
 	m->c = (Correspondance**)calloc(nbLignes, sizeof(Correspondance*));
 	if (m->c == NULL) {
 		free(m->l);
@@ -46,7 +47,7 @@ Metro *creer_Metro(int totalStations, int nbLignes) {
 		free(m);
 		m = NULL;
 		return NULL;
-	}*/
+	}
 	return m;
 }
 
@@ -69,8 +70,13 @@ int Ligne_Metro(Metro *m, char numero, int nbStations, int position) {
 
 void lire_Metro(Metro **m, FILE *entree) {
 	char tmp[20];
+	int i, j=0, k=0, x=0, y=0, compteur=0, l;
 	int totalStations;
 	int nbLignes;
+	int tempsParcours;
+	char ligne;
+	char tmp2[5];
+	int interrupteur = 0;
 	if ((*m) != NULL) {
 		return;
 	}
@@ -79,10 +85,80 @@ void lire_Metro(Metro **m, FILE *entree) {
 	fscanf(entree, "%s", tmp);
 	nbLignes = atoi(tmp);
 	(*m) = creer_Metro(totalStations, nbLignes);
-	fscanf(entree, "%s", tmp);
-	printf("%s\n", tmp);
-	fscanf(entree, "%s", tmp);
-	printf("%s\n", tmp);
+	while ((fscanf(entree, "%s", tmp)) != EOF) {
+		switch(interrupteur) {
+			case 0 :
+				if((tmp[0] != '(') && (tmp[0] != 'c') && (tmp[0] != 'C')) {
+					i = atoi(tmp);
+					printf("-%d-  ", i);
+				}
+				else if (tmp[0] == '('){
+					k = 1;
+					i--;
+					compteur = 0;
+					while (tmp[k] != ')') {
+						if (tmp[k] == ' ' || tmp[k] == ',') {
+							k++;
+							continue;
+						}
+						switch (compteur) {
+							case 0 :
+								l = 0;
+								while (tmp[k] != ' ' && tmp[k] != ',' && tmp[k] != ')') {
+									tmp2[l] = tmp[k];
+									l++;
+									k++;
+								}
+								tmp2[l] = '\n';
+								y = atoi(tmp2);
+								printf("(%d ", y);
+								compteur++;
+							break;
+							case 1 :
+								ligne = tmp[k];
+								printf("%c ", ligne);
+								compteur++;
+								k++;
+							break;
+							case 2 :
+								l = 0;
+								while (tmp[k] != ' ' && tmp[k] != ',' && tmp[k] != ')') {
+									tmp2[l] = tmp[k];
+									l++;
+									k++;
+								}
+								tmp2[l] = '\n';
+								tempsParcours = atoi(tmp2);
+								printf("%d)  ", tempsParcours);
+							break;
+						}
+					}
+					(*m)->p[x][y] = creer_Parcours(tempsParcours, ligne);
+					if (i == 0) {
+						printf("\n");
+						x++;
+					}
+				}
+				else if ((tmp[0] == 'c') || (tmp[0] == 'C')) {
+					interrupteur = 1;
+				}
+			break;
+			/*case 1 :
+				
+				if (tmp[1] == ':') {
+					tmp2[0] = tmp[0];
+					tmp2[1] = '\n';
+					(*m)->c[j]->association[]
+				}
+
+				i = atoi(tmp);
+				printf ("Correspondance %d\n", i);
+				(*m)->c[j] = creer_Correspondance(i, nbLignes);
+				j++;
+				(*m)->nbCorresp++;
+			break;*/
+		}
+	}
 }
 
 /*
@@ -124,6 +200,14 @@ void liberer_Metro(Metro *m) {
 			free(m->p);
 			m->p = NULL;
 		}
+	/*	if (m->c != NULL) {
+			for (j=0; j<m->totalStations ; j++) {
+				free(m->p[j]);
+				m->p[j] = NULL;
+			}
+			free(m->p);
+			m->p = NULL;
+		}*/
 		if (m->l != NULL) {
 			/*for (j = 0; j<m->c[0]->nbLignes ; j++) {
 				liberer_Ligne(m->l[j]);

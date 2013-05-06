@@ -9,6 +9,7 @@
 
 typedef struct {
 	int totalStations;
+	int nbCorresp;
 	Parcours **p;
 	Ligne **l;
 	Correspondance **c;
