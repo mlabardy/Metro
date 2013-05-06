@@ -87,3 +87,23 @@ void liberer_Correspondance(Correspondance *c) {
 		c = NULL;
 	}
 }
+
+void ajouter_Ligne_Correspondance(Correspondance *c, char ligne, int position) {
+	c->association[position] = ligne;
+}
+
+void ecrire_association_Correspondance(Correspondance *c, FILE *sortie) {
+	int i;
+	for (i=0 ; i<c->nbLignes ; i++) {
+		fprintf(sortie, "%c ", c->association[i]);
+	}
+	fprintf(sortie, "\n");
+}
+/*
+void ajouter_Correspondance(Correspondance **c, char origine, char destination, int tempsCorresp) {
+	if ((*c) == NULL) {
+		fprintf(stderr, "Erreur\n");
+		return;
+	}
+	(*c)->correspondance[origine][destination] = 
+}*/

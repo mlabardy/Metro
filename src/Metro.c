@@ -143,8 +143,8 @@ void lire_Metro(Metro **m, FILE *entree) {
 					interrupteur = 1;
 				}
 			break;
-			/*case 1 :
-				
+			case 1 :
+				/*
 				if (tmp[1] == ':') {
 					tmp2[0] = tmp[0];
 					tmp2[1] = '\n';
@@ -155,8 +155,9 @@ void lire_Metro(Metro **m, FILE *entree) {
 				printf ("Correspondance %d\n", i);
 				(*m)->c[j] = creer_Correspondance(i, nbLignes);
 				j++;
-				(*m)->nbCorresp++;
-			break;*/
+				(*m)->nbCorresp++;*/
+				
+			break;
 		}
 	}
 }

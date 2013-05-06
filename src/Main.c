@@ -13,16 +13,18 @@ int main (int argc, char **argv) {
 	ecrire_Parcours(p, stdout);
 	exit(EXIT_SUCCESS);
 */
-/*
-	Correspondance *c = creer_Correspondance(2, 5);
-	liberer_Correspondance(c);
-*/
 
+	Correspondance *c = creer_Correspondance(2, 5);
+	ajouter_Ligne_Correspondance(c, 'a', 0);
+	ecrire_association_Correspondance(c, stdout);
+	liberer_Correspondance(c);
+
+/*
 	Metro * m = NULL;
 	FILE* f;
 	ouvrirFichier(&f, "Metro", "r");
 	lire_Metro(&m, f);
 	fermerFichier(f);
-	liberer_Metro(m);
+	liberer_Metro(m);*/
 	exit(EXIT_SUCCESS);
 }
