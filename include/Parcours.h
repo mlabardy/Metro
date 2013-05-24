@@ -40,6 +40,7 @@ void liberer_Tab_Parcours(Parcours **p, int taille);
 /* Cette fonction écrit un tableau de parcours sur la sortie. */
 void ecrire_Tab_Parcours(Parcours **p, int taille, FILE *sortie);
 
+/* Cette fonction transforme un graphe orienté en graphe non orienté. */
 int copier_ParcoursNonOriente(Parcours **origine, Parcours **destination, int taille);
 
 /* Cette fonction effectue la transposée d'une matrice. */

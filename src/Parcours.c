@@ -195,33 +195,8 @@ void ecrire_Tab_Parcours(Parcours **p, int taille, FILE *sortie) {
  * \return 		-1 en cas d'erreur.
  */
 int transposee(Parcours **m, Parcours **p, int taille) {
-	int i, j, station;
+	int i, station;
 	Parcours *tmp = NULL;
-	int **matrice = NULL;
-	int **t = NULL;
-	if (p == NULL) {
-		return -1;
-	}
-	/*matrice = creer_Matrice(taille);
-	t = creer_Matrice(taille);
-	for (i=0 ; i<taille ; ++i) {
-		tmp = m[i];
-		while (tmp !=  NULL) {
-			matrice[i][tmp->stationAdj] = tmp->tempsParcours;
-			tmp = tmp->suivant;
-		}
-	}
-	for (i=0 ; i<taille ; ++i) {
-		for (j=0 ; j<taille ; ++j) {
-			matrice[i][j] = t[j][i];
-		}
-	}
-	for (i=0 ; i<taille ; ++i) {
-		for (j=0 ; j<taille ; ++j) {
-			if (t[i][j] != 0)
-				ajouter_Parcours(&p[i], j, '\0', t[i][j]);
-		}
-	}*/
 	if (p == NULL) {
 		return -1;
 	}
@@ -233,11 +208,17 @@ int transposee(Parcours **m, Parcours **p, int taille) {
 			tmp = tmp->suivant;
 		}
 	}
-	/*liberer_Matrice(matrice, taille);
-	liberer_Matrice(t, taille);
-	*/return 0;
+	/return 0;
 }
 
+/**
+ * Cette fonction transforme un graphe orienté en graphe non orienté.
+ * \param		destination, le tableau de parcours destination.
+ * \param		origine, le tableau de parcours origine.
+ * \param		taille, la taille du tableau de parcours.
+ * \return 		0 en cas de succès.
+ * \return 		-1 en cas d'erreur. 
+ */
 int copier_ParcoursNonOriente(Parcours **origine, Parcours **destination, int taille) {
 	int i, station;
 	Parcours *tmp = NULL;
@@ -256,7 +237,7 @@ int copier_ParcoursNonOriente(Parcours **origine, Parcours **destination, int ta
 }
 
 /**
- * Cette fonction determine le valuation minimale dans le tableau de parcours et retourne la station associée.
+ * Cette fonction determine la valuation minimale dans le tableau de parcours et retourne la station associée.
  * \param		p, tableau de stations.
  * \param		ensemble, un tableau indiquant l'ensemble des stations déjà visités.
  * \param		taille, le nombre de stations.

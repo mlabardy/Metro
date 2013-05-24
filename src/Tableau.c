@@ -1,7 +1,9 @@
 #include "Tableau.h"
 
 /**
- *
+ * Cette fonction réinitialise une chaîne en l'a remplissant de '\0'.
+ * \param       chaine, une chaîne de caractères.
+ * \param       taille, la taille de la chaîne de caractères. 
  */
 void reinitialiser_Chaine(char *chaine, int taille) {
 	int i;
@@ -11,7 +13,10 @@ void reinitialiser_Chaine(char *chaine, int taille) {
 } 
 
 /**
- *
+ * Cette fonction crée une chaîne de caractères.
+ * \param       taille, la taille de la nouvelle chaîne de caractères.
+ * \return      la nouvelle chaîne de caractères, en cas de succès.
+ * \return      NULL,  en cas d'erreurs. 
  */
 char *creer_Chaine(int taille) {
 	char *chaine = NULL;
@@ -27,7 +32,8 @@ char *creer_Chaine(int taille) {
 }
 
 /**
- *
+ * Cette fonction libère la mémoire allouée pour une chaîne de caractères.
+ * \param       chaine, une chaîne de caractères.
  */
 void liberer_Chaine(char *chaine) {
 	free(chaine);
@@ -35,7 +41,10 @@ void liberer_Chaine(char *chaine) {
 }
 
 /**
- *
+ * Cette fonction crée un tableau d'entiers.
+ * \param       taille, la taille du tableau.
+ * \return      le nouveau tableau, en cas de succès.
+ * \return      NULL, en cas d'erreurs.
  */
 int *creer_Tableau(int taille) {
 	int *tab = NULL;
@@ -51,7 +60,8 @@ int *creer_Tableau(int taille) {
 }
 
 /**
- *
+ * Cette fonction libère la mémoire allouée pour la tableau d'entiers.
+ * \param       tab, le tableau à libérer.s
  */
 void liberer_Tableau(int *tab) {
 	free(tab);
@@ -59,7 +69,10 @@ void liberer_Tableau(int *tab) {
 }
 
 /**
- *
+ * Cette fonction écrit sur la sortie, un tableau d'entiers.
+ * \param       tab, un tableau d'entiers.
+ * \param       taille, la taille du tableau.
+ * \param       sortie, un déscripteur sur la sortie.
  */
 void ecrire_Tableau(int *tab, int taille, FILE *sortie) {
 	int i;
@@ -69,6 +82,12 @@ void ecrire_Tableau(int *tab, int taille, FILE *sortie) {
 	fprintf(sortie, "\n");
 }
 
+/**
+ * Cette fonction crée une matrice carré d'entiers.
+ * \param       taille, les dimensions de la matrice.
+ * \return      une matrice, en cas de succès.
+ * \return      NULL, en cas d'erreurs. 
+ */
 int **creer_Matrice(int taille) {
 	int i, j;
 	int **matrice = (int**)calloc(taille, sizeof(int*));
@@ -90,6 +109,11 @@ int **creer_Matrice(int taille) {
 	return matrice;
 }
 
+/**
+ * Cette fonction libère la mémoire allouée pour une matrice.
+ * \param       matrice, la matrice à libérer.
+ * \param       taille, la taille de la matrice.
+ */
 void liberer_Matrice(int **matrice, int taille) {
 	int i;
 	for (i=0 ; i <taille ; ++i) {

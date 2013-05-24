@@ -1,7 +1,11 @@
 #include "Ligne.h"
 
 /**
- *
+ * Cette fonction alloue une structure pour stocker les éléments d'une ligne de métro.
+ * \param       numero, le nom de la ligne.
+ * \param       nbStation, le nombre de stations présents dans la ligne.
+ * \return      la nouvelle ligne, en cas de succès.
+ * \return      NULL, en cas d'erreur.
  */
 Ligne *creer_Ligne(char numero, int nbStations) {
 	Ligne *l = (Ligne*)malloc(sizeof(Ligne));
@@ -22,7 +26,10 @@ Ligne *creer_Ligne(char numero, int nbStations) {
 }
 
 /**
- *
+ * Cette fonction crée un tableau de lignes.
+ * \param       taille, le nombre de lignes.
+ * \return      le tableau de ligne, en cas de succès.
+ * \return      NULL, en cas d'erreur.
  */
 Ligne **creer_Tab_Ligne(int taille) {
 	Ligne **l = NULL;
@@ -40,7 +47,6 @@ Ligne **creer_Tab_Ligne(int taille) {
 
 /**
  * Cette fonction désalloue une ligne de métro.
- * Le tableau de stations est d'abord libéré puis la ligne est désallouée.
  * \param		l, la ligne à libérer.
  */
 void liberer_Ligne(Ligne *l) {
@@ -55,7 +61,9 @@ void liberer_Ligne(Ligne *l) {
 }
 
 /**
- *
+ * Cette fonction libère le tableau de lignes alloué.
+ * \param       l, le tableau de lignes.
+ * \param       taille, le nombre de lignes.
  */
 void liberer_Tab_Ligne(Ligne **l, int taille) {
 	int i;
@@ -71,7 +79,7 @@ void liberer_Tab_Ligne(Ligne **l, int taille) {
 /**
  * Cette fonction écrit, sur la sortie souhaitée, une ligne de métro.
  * \param		l, la ligne de métro.
- * \param		sortie, un déscripteur.
+ * \param		sortie, un déscripteur sur la sortie. 
  */
 void ecrire_Ligne(Ligne *l, FILE *sortie) {
 	int i;

@@ -62,7 +62,10 @@ void liberer_Correspondance(Correspondance *c) {
 }
 
 /**
- *
+ * Cette fonction crée un tableau de correspondances.
+ * \param       taille, le nombre de correspondances.
+ * \return      le tableau de correspondance, en cas de succès.
+ * \return      NULL, en cas d'erreurs.
  */
 Correspondance **creer_Tab_Correspondance(int taille) {
 	Correspondance **c = NULL;
@@ -95,7 +98,7 @@ void liberer_Tab_Correspondance(Correspondance **c, int taille) {
 
 /**
  *
- */
+ *//*
 void ajouter_Ligne(char ligne, char *lignes, int nbLignes) {
 	int i = 0;
 	if (nbLignes <= 0) {
@@ -113,20 +116,25 @@ void ajouter_Ligne(char ligne, char *lignes, int nbLignes) {
 		i++;
 	}
 }
-
+*/
 /**
- *
- */
+ * Cette fonction permet d'afficher sur la sortie, l
+ *//*
 void ecrire_association_Correspondance(int nbLignes, char *lignes, FILE *sortie) {
 	int i;
 	for (i=0 ; i<nbLignes ; i++) {
 		fprintf(sortie, "%c ", lignes[i]);
 	}
 	fprintf(sortie, "\n");
-}
+}*/
 
 /**
- *
+ * Cette fonction ajoute le temps de changement de lignes entre deux lignes.
+ * \param       c, la correspondance concernée.
+ * \param       origine, la ligne d'arrivée.
+ * \param       destination, la ligne de sortie.
+ * \param       tempsCorresp, le temps de changemenst entre les deux lignes.
+ * \param       lignes, le tableau de lignes.
  */
 void ajouter_Correspondance(Correspondance *c, char origine, char destination, int tempsCorresp, char *lignes) {
 	int i, x, y, tmp = 0;
@@ -152,7 +160,9 @@ void ajouter_Correspondance(Correspondance *c, char origine, char destination, i
 }
 
 /**
- *
+ * Cette fonction affiche sur la sortie une correspondance.
+ * \param       c, une correspondance à afficher.
+ * \param       sortie, la sortie pour l'affichage.
  */
 void ecrire_Correspondance(Correspondance *c, FILE *sortie) {
 	int i, j;
@@ -166,7 +176,14 @@ void ecrire_Correspondance(Correspondance *c, FILE *sortie) {
 } 
 
 /**
- *
+ * Cette fonction lit une correspondance depuis une entrée, et stocke ces informations dans la structure Correspondance
+ * \param       c, une correspondance à modifier.
+ * \param       entree, l'entrée pour la lecture de la correspondance.
+ * \param       ligneD, la ligne à insérer.
+ * \param       lignes, le tableau contenant les lignes metro, il permet de faire d'associer une ligne à un indice.
+ * \param       nbLignes, le nombre total de lignes.
+ * \return      -1 en cas d'erreurs.
+ * \return      0 en cas de succès.
  */
 int lire_Correspondance(Correspondance **c, FILE *entree, char ligneD, char *lignes, int nbLignes) {
 	char tmp[10], tmp2[4];
@@ -180,7 +197,7 @@ int lire_Correspondance(Correspondance **c, FILE *entree, char ligneD, char *lig
 	fscanf(entree, "%s", tmp);
 	taille = atoi(tmp);
 	if (taille == 0) {
-		return -2;
+		return -1;
 	}
 	while (taille != 0) {
 		if ((*c) == NULL) {

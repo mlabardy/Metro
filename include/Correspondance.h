@@ -17,6 +17,7 @@ Correspondance *creer_Correspondance(int nbLignes, int nbStations);
 /* Cette fonction désalloue la mémoire allouée pour une correspondance. */
 void liberer_Correspondance(Correspondance *c);
 
+/*  */
 void ajouter_Ligne(char ligne, char *lignes, int nbLignes);
 
 void ajouter_Correspondance(Correspondance *c, char origine, char destination, int tempsCorresp, char *lignes);
