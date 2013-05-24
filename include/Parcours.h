@@ -32,8 +32,6 @@ void ecrire_Parcours(Parcours *p, FILE *sortie);
 /* Cette fonction lit un parcours depuis une entree et le stocke dans le tableau de parcours. */
 int lire_Parcours(Parcours **p, FILE *entree, int taille);
 
-void lire_UnParcours(Parcours **p, FILE *entree);
-
 /* Cette fonction libère le tableau de parcours . */
 void liberer_Tab_Parcours(Parcours **p, int taille);
 
