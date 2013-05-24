@@ -1,39 +1,7 @@
 #include "Ligne.h"
-/*
-Ligne creer_Ligne(char numero, int nbStations) {
-	Ligne l;
-	l.nbStations = nbStations;
-	l.numero = numero;
-	l.stations = (int*)calloc(nbStations, sizeof(int));
-	if (l.stations == NULL) {
-		fprintf(stderr, "Une erreur est survenue lors de l'allocation de ligne.stations\n");
-		exit(EXIT_FAILURE);
-	}
-	return l;
-}
 
-void liberer_Ligne(Ligne l) {
-	if (l.stations != NULL) {
-		free(l.stations);
-		l.stations = NULL;
-	}
-}
-
-void ecrire_Ligne(Ligne l, FILE *sortie) {
-	int i;
-	for (i=0 ; i<l.nbStations ; i++) {
-		fprintf(sortie, "%d ", l.stations[i]);	
-	}
-	fprintf(sortie, "\n");
-}
-*/
 /**
- * Cette fonction crée une ligne de métro.
- * Ses stations sont initialisées à 0.
- * \param		numero, le numéro de la ligne.
- * \param		nbStations, le nombre de stations dans la ligne.
- * \return 		l, la nouvelle ligne de métro en cas de succès.
- * \return 		NULL, en cas d'erreur.
+ *
  */
 Ligne *creer_Ligne(char numero, int nbStations) {
 	Ligne *l = (Ligne*)malloc(sizeof(Ligne));
@@ -41,13 +9,30 @@ Ligne *creer_Ligne(char numero, int nbStations) {
 		fprintf(stderr, "Une erreur est survenue lors de l'allocation de la ligne\n");
 		return NULL;
 	}
-	l->nbStations = nbStations;
 	l->numero = numero;
+	l->longueur = 0;
 	l->stations = (int*)calloc(nbStations, sizeof(int));
 	if (l->stations == NULL) {
 		fprintf(stderr, "Une erreur est survenue lors de l'allocation de ligne.stations\n");
 		free(l);
 		l = NULL;
+		return NULL;
+	}
+	return l;
+}
+
+/**
+ *
+ */
+Ligne **creer_Tab_Ligne(int taille) {
+	Ligne **l = NULL;
+	if (taille <= 0) {
+		fprintf(stderr, "La taille de 'ligne[]' est invalide\n");
+		return NULL;
+	}
+	l = (Ligne**)calloc(taille, sizeof(Ligne*));
+	if (l == NULL) {
+		fprintf(stderr, "Une erreur est survenue lors de l'allocation de 'ligne[]'\n");
 		return NULL;
 	}
 	return l;
@@ -70,14 +55,28 @@ void liberer_Ligne(Ligne *l) {
 }
 
 /**
+ *
+ */
+void liberer_Tab_Ligne(Ligne **l, int taille) {
+	int i;
+	if (l != NULL) {
+		for (i=0 ; i<taille ; ++i) {
+			liberer_Ligne(l[i]);
+		}
+		free(l);
+		l = NULL;
+	}
+}
+
+/**
  * Cette fonction écrit, sur la sortie souhaitée, une ligne de métro.
  * \param		l, la ligne de métro.
  * \param		sortie, un déscripteur.
  */
 void ecrire_Ligne(Ligne *l, FILE *sortie) {
 	int i;
-	fprintf(sortie, "Ligne : %c ", l->numero);	
-	for (i=0 ; i<l->nbStations ; i++) {
+	fprintf(sortie, "Ligne %c :  ", l->numero);	
+	for (i=0 ; i<l->longueur ; i++) {
 		fprintf(sortie, "%d ", l->stations[i]);	
 	}
 	fprintf(sortie, "\n");

@@ -1,14 +1,5 @@
 #include "Correspondance.h"
 
-/*
-typedef struct {
-	int station;
-	int nbLignes;
-	int **correspondance;
-	int *association;
-} Correspondance;
-*/
-
 /**
  * Cette fonction crée une correspondance.
  * \param		station, la station de départ. 
@@ -16,7 +7,7 @@ typedef struct {
  * \return 		c, la nouvelle correspondance en cas de succès.
  * \return 		NULL, en cas d'erreur.
  */
-Correspondance *creer_Correspondance(int station, int nbLignes) {
+Correspondance *creer_Correspondance(int nbLignes, int nbStations) {
 	Correspondance *c = NULL;
 	int i, j;
 	c = (Correspondance*)calloc(1, sizeof(Correspondance));
@@ -46,21 +37,7 @@ Correspondance *creer_Correspondance(int station, int nbLignes) {
 			return NULL;
 		}
 	}
-	c->association = (int*)calloc(nbLignes, sizeof(int));
-	if (c->association == NULL) {
-		fprintf(stderr, "Une erreur est survenue lors de l'allocation de c->association\n");
-		for (j=0 ; j<nbLignes; j++) {
-			free(c->correspondance[j]);
-			c->correspondance[j] = NULL;
-		}
-		free(c->correspondance);
-		c->correspondance = NULL;
-		free(c);
-		c = NULL;
-		return NULL;
-	}
 	c->nbLignes = nbLignes;
-	c->station = station;
 	return c;
 }
 
@@ -79,31 +56,154 @@ void liberer_Correspondance(Correspondance *c) {
 			free(c->correspondance);
 			c->correspondance = NULL;
 		}
-		if (c->association != NULL) {
-			free(c->association);
-			c->association = NULL;
+		free(c);
+		c = NULL;
+	}
+}
+
+/**
+ *
+ */
+Correspondance **creer_Tab_Correspondance(int taille) {
+	Correspondance **c = NULL;
+	if (taille <= 0) {
+		fprintf(stderr, "La taille de 'correspondance[]' est invalide \n");
+		return NULL;
+	}
+	c = (Correspondance**)calloc(taille, sizeof(Correspondance*));
+	if (c == NULL) {
+		fprintf(stderr, "Une erreur est survenue lors de l'allocation de 'correspondance[]'\n");
+		return NULL;
+	}
+	return c;
+}
+
+/**
+ * Cette fonction désalloue la mémoire allouée pour une correspondance.
+ * \param		c, une correspondance.
+ */
+void liberer_Tab_Correspondance(Correspondance **c, int taille) {
+	int j;
+	if (c != NULL) {
+		for (j=0 ; j<taille ; j++) {
+			liberer_Correspondance(c[j]);	
 		}
 		free(c);
 		c = NULL;
 	}
 }
 
-void ajouter_Ligne_Correspondance(Correspondance *c, char ligne, int position) {
-	c->association[position] = ligne;
+/**
+ *
+ */
+void ajouter_Ligne(char ligne, char *lignes, int nbLignes) {
+	int i = 0;
+	if (nbLignes <= 0) {
+		fprintf(stderr, "la taille lignes[] est invalide\n");
+		return;
+	}
+	while (i<nbLignes) {
+		if (lignes[i] == ligne) {
+			return;
+		}
+		if (lignes[i] == 0) {
+			lignes[i] = ligne;
+			return;
+		}
+		i++;
+	}
 }
 
-void ecrire_association_Correspondance(Correspondance *c, FILE *sortie) {
+/**
+ *
+ */
+void ecrire_association_Correspondance(int nbLignes, char *lignes, FILE *sortie) {
 	int i;
-	for (i=0 ; i<c->nbLignes ; i++) {
-		fprintf(sortie, "%c ", c->association[i]);
+	for (i=0 ; i<nbLignes ; i++) {
+		fprintf(sortie, "%c ", lignes[i]);
 	}
 	fprintf(sortie, "\n");
 }
-/*
-void ajouter_Correspondance(Correspondance **c, char origine, char destination, int tempsCorresp) {
-	if ((*c) == NULL) {
+
+/**
+ *
+ */
+void ajouter_Correspondance(Correspondance *c, char origine, char destination, int tempsCorresp, char *lignes) {
+	int i, x, y, tmp = 0;
+	if (c == NULL) {
 		fprintf(stderr, "Erreur\n");
 		return;
 	}
-	(*c)->correspondance[origine][destination] = 
-}*/
+	for (i=0 ; i<c->nbLignes ; i++) {
+		if (tmp != 2) {
+			if (lignes[i] == origine) {
+				x = i;
+				tmp++;
+			}
+			else if (lignes[i] == destination) {
+				y = i;
+				tmp++;
+			}
+		}
+		else 
+			break;
+	}
+	c->correspondance[x][y] = tempsCorresp;
+}
+
+/**
+ *
+ */
+void ecrire_Correspondance(Correspondance *c, FILE *sortie) {
+	int i, j;
+	for (i=0 ; i<c->nbLignes ; i++) {
+		for (j=0 ; j<c->nbLignes ; j++) {
+			fprintf(sortie, "%d ", c->correspondance[i][j]);
+		}
+		fprintf(sortie, "\n");
+	}
+	fprintf(sortie, "\n");
+} 
+
+/**
+ *
+ */
+int lire_Correspondance(Correspondance **c, FILE *entree, char ligneD, char *lignes, int nbLignes) {
+	char tmp[10], tmp2[4];
+	char ligneA;
+	int taille = 0, tempsCorresp = 0, i, j;
+	if (lignes == NULL) {
+		fprintf(stderr, "Le tableau lignes[] est vide\n");
+		return -1;
+	}
+	ajouter_Ligne(ligneD, lignes, nbLignes);
+	fscanf(entree, "%s", tmp);
+	taille = atoi(tmp);
+	if (taille == 0) {
+		return -2;
+	}
+	while (taille != 0) {
+		if ((*c) == NULL) {
+			(*c) = creer_Correspondance(nbLignes, nbLignes);
+			if ((*c) == NULL) {
+				return -1;
+			}
+		}
+		fscanf(entree, "%s", tmp);
+		ligneA = tmp[1];
+		ajouter_Ligne(ligneA, lignes, nbLignes);
+		i = 3;
+		j = 0;
+		reinitialiser_Chaine(tmp2, taille);
+		while (tmp[i] != ')') {
+			tmp2[j] = tmp[i];
+			i++;
+			j++;
+		}
+		tmp2[j] = '\0';
+		tempsCorresp = atoi(tmp2);
+		ajouter_Correspondance((*c), ligneD, ligneA, tempsCorresp, lignes);
+		taille--;
+	}
+	return 0;
+}

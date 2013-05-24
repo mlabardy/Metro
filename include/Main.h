@@ -3,10 +3,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "Ligne.h"
-#include "Parcours.h"
 #include "Correspondance.h"
-#include "Metro.h"
+#include "Parcours.h"
+#include "Ligne.h"
 #include "Fichier.h"
+#include "Metro.h"
 
 #endif

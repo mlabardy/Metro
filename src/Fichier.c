@@ -1,10 +1,10 @@
 #include "Fichier.h"
 
 /**
- * Cette fonction ouvre un fichier selon le mode.
+ * Cette fonction ouvre un fichier selon le mode et initialise le descripteur 'fichier' 
  * \param 		fichier (un pointeur de type FILE).
  * \param		nomFichier (le nom du fichier à ouvrir).
- * \param
+ * \param		mode, mode pour le descripteur de fichier.
  */
 void ouvrirFichier(FILE**fichier, char* nomFichier, char* mode) {
 	(*fichier) = fopen(nomFichier, mode);
@@ -14,7 +14,7 @@ void ouvrirFichier(FILE**fichier, char* nomFichier, char* mode) {
 }
 
 /**
- * Cette fonction ferme un fichier.
+ * Cette fonction ferme un fichier et réinitialise le descripteur du fichier.
  * \param 		fichier (un pointeur de type FILE, sur le fichier actuellement ouvert).
  */
 void fermerFichier(FILE* fichier) {

@@ -2,7 +2,7 @@ SRC = src/
 INCL = include/
 inc = -I./include
 
-PROJECT = Metro.o Correspondance.o Parcours.o Ligne.o Fichier.o Main.o
+PROJECT = Parcours.o Fichier.o Metro.o Main.o Correspondance.o Ligne.o Tableau.o
 
 TARGET = metro
 
